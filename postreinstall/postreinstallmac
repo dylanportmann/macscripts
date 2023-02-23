@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 #script post reinstall mac for jamf
 
 #Function choose name
@@ -19,13 +19,20 @@ runactions () {
     sudo jamf policy;
 }
 
-echo "Computer name is $nom right ?"
-select yn in "Yes" "No"; do 
-    case $yn in 
-        Yes ) runactions;;
-        No ) exit;;
-    esac
-done
+while true; do
+
+namechoose;
+
+read -p "Computer name is $nom right ? (yes/no)" yn
+
+case $yn in 
+    yes ) runactions;
+        break;;
+    no  ) echo relunch;;
+esac
+
+done 
+
 
 
  
