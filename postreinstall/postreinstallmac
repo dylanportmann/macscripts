@@ -1,0 +1,33 @@
+#!/bin/zsh
+#script post reinstall mac for jamf
+
+#Function choose name
+namechoose () {
+    echo "Entrer le nom de la machine :";
+    read nom;
+}
+
+#Function do action
+runactions () {
+    sudo scutil --set HostName $nom;
+    sudo scutil --set LocalHostName $nom;
+    sudo scutil --set ComputerName $nom;
+    echo Rename Successful
+    echo Renew profiles ...
+    sudo profiles renew -type enrollment;
+    echo Checkling Jamf policy ...
+    sudo jamf policy;
+}
+
+echo "Computer name is $nom right ?"
+select yn in "Yes" "No"; do 
+    case $yn in 
+        Yes ) runactions;;
+        No ) exit;;
+    esac
+done
+
+
+ 
+
+
